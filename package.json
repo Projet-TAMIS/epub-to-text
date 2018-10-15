@@ -1,0 +1,32 @@
+{
+  "name": "epub-to-text",
+  "version": "0.0.1",
+  "description": "Converts an EPUB file to one plain text file per chapter",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha --reporter spec --timeout 15000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Projet-TAMIS/epub-to-text.git"
+  },
+  "keywords": [
+    "epub",
+    "text",
+    "file"
+  ],
+  "dependencies": {
+    "epub": "^1.1.0",
+    "html-to-text": "^3.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "tmp": "^0.0.33"
+  },
+  "author": "Christian Roy",
+  "licenses": "MIT",
+  "bugs": {
+    "url": "https://github.com/Projet-TAMIS/epub-to-text/issues"
+  },
+  "homepage": "https://github.com/Projet-TAMIS/epub-to-text#readme"
+}

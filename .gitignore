@@ -1,0 +1,10 @@
+.DS_Store
+res.txt
+test.csv
+.~lock*
+*.xls
+*.csv
+out/*
+tests/famille*
+node_modules
+*~
