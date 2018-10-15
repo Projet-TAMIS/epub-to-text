@@ -24,7 +24,10 @@ class EPUBToText {
     epub.on('end', function() {
       epub.flow.forEach(function(chapter, sequence) {
         epub.getChapter(chapter.id, function(err, html) {
-          var txt = htmlToText.fromString(html.toString(), {ignoreHref: true});
+          var txt = '';
+          if (html) {
+            txt = htmlToText.fromString(html.toString(), {ignoreHref: true});
+          };
           callback(err, txt, sequence);
         });
       });
