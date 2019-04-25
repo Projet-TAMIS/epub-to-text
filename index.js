@@ -34,6 +34,7 @@ class EPUBToText {
           meta.id = chapter.id;
           meta.excerpt = txt.trim().slice(0, 250);
           meta.size = txt.length
+          meta.sequence_number = sequence
           if (chapter.title) {
             meta.title = chapter.title
           } else {

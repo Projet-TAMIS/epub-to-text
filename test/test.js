@@ -61,6 +61,7 @@ describe('EpubToText', function() {
           assert.equal('titlepage', meta.id);
           assert.equal(169, meta.size);
           assert.equal(0, meta.excerpt.indexOf('Indexing for Editors and Authors'));
+          assert.equal(1, meta.sequence_number);
         }
 
         // Check meta - flow already contains title
@@ -69,6 +70,7 @@ describe('EpubToText', function() {
           assert.equal('foreword001', meta.id);
           assert.equal(6666, meta.size);
           assert.equal(0, meta.excerpt.indexOf('FOREWORD'));
+          assert.equal(4, meta.sequence_number)
         }
 
         if (processedCount >= totalCount) {
