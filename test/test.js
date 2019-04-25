@@ -55,18 +55,20 @@ describe('EpubToText', function() {
         processedCount += 1;
         assert.ok(meta);
 
-        // Check meta - flow already contains title
-        if (sequence == 4) {
-          assert.equal('Foreword, by Dan Kirklin', meta.title);
-          assert.equal('foreword001', meta.id);
-          assert.equal(0, meta.excerpt.indexOf('FOREWORD'));
-        }
-
         // Check meta - flow does not contain title
         if (sequence == 1) {
           assert.equal('A Practical Guide to Understanding Indexes', meta.title);
           assert.equal('titlepage', meta.id);
+          assert.equal(169, meta.size);
           assert.equal(0, meta.excerpt.indexOf('Indexing for Editors and Authors'));
+        }
+
+        // Check meta - flow already contains title
+        if (sequence == 4) {
+          assert.equal('Foreword, by Dan Kirklin', meta.title);
+          assert.equal('foreword001', meta.id);
+          assert.equal(6666, meta.size);
+          assert.equal(0, meta.excerpt.indexOf('FOREWORD'));
         }
 
         if (processedCount >= totalCount) {

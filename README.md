@@ -34,6 +34,7 @@ epubToText.extract('epub_file.epub', (err, txt, n, meta) => {
   // meta.id is the chapter internal id
   // meta.title contains a string that hopefully is the title name, or is empty
   // meta.excerpt contains a 250 characters string from the chapter content
+  // meta.size is the size of the chapter, in number of characters
 }, (err, N) => {
   // N is the number of chapters
 })
