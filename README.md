@@ -26,6 +26,20 @@ epubToText.extract('epub_file.epub', (err, txt, n) => {
 })
 ```
 
+You can also get some metadata about each chapter. The title information may or may not be available, depending on the EPUB structure (the parser looks for the title in EPUB navMap if there is one, otherwise tries to get it directly form the HTML, looking for the first `<title>` or `<h1>` tag).
+
+```js
+var epubToText = new EPUBToText;
+epubToText.extract('epub_file.epub', (err, txt, n, meta) => {
+  // meta.id is the chapter internal id
+  // meta.title contains a string that hopefully is the title name, or is empty
+  // meta.excerpt contains a 250 characters string from the chapter content
+}, (err, N) => {
+  // N is the number of chapters
+})
+```
+
+
 ### Writing to disk
 
 To write the chapters to disk:

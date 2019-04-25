@@ -32,7 +32,7 @@ describe('EpubToText', function() {
       });
     });
 
-    it('get raw content, not HTML', function(done) {
+    it('gets raw content, not HTML', function(done) {
       var totalCount;
       var processedCount = 0;
 
@@ -46,6 +46,36 @@ describe('EpubToText', function() {
         totalCount = n;
       });
     });
+
+    it('calls back with metadata about the chapter', function(done) {
+      var totalCount;
+      var processedCount = 0;
+
+      epubToText.extract(__dirname + '/indexing-for-eds-and-auths-3f.epub', (err, txt, sequence, meta) => {
+        processedCount += 1;
+        assert.ok(meta);
+
+        // Check meta - flow already contains title
+        if (sequence == 4) {
+          assert.equal('Foreword, by Dan Kirklin', meta.title);
+          assert.equal('foreword001', meta.id);
+          assert.equal(0, meta.excerpt.indexOf('FOREWORD'));
+        }
+
+        // Check meta - flow does not contain title
+        if (sequence == 1) {
+          assert.equal('A Practical Guide to Understanding Indexes', meta.title);
+          assert.equal('titlepage', meta.id);
+          assert.equal(0, meta.excerpt.indexOf('Indexing for Editors and Authors'));
+        }
+
+        if (processedCount >= totalCount) {
+          done();
+        }
+      }, (err, n) => {
+        totalCount = n;
+      });
+    })
 
   });
 

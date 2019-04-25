@@ -4,6 +4,7 @@ var fs = require('fs');
 var EPub = require('epub');
 var htmlToText = require('html-to-text');
 var path = require('path');
+var htmlParser = require('node-html-parser');
 
 class EPUBToText {
   /**
@@ -19,6 +20,7 @@ class EPUBToText {
    **/
   extract(sourceFile, callback, initialCallback) {
     var epub = new EPub(sourceFile);
+    var klass = this;
 
     // callback fired for each chapter (or they are written to disk)
     epub.on('end', function() {
@@ -28,7 +30,15 @@ class EPUBToText {
           if (html) {
             txt = htmlToText.fromString(html.toString(), {ignoreHref: true});
           };
-          callback(err, txt, sequence);
+          var meta = {};
+          meta.id = chapter.id;
+          meta.excerpt = txt.trim().slice(0, 250);
+          if (chapter.title) {
+            meta.title = chapter.title
+          } else {
+            meta.title = klass.getTitleFromHtml(html);
+          }
+          callback(err, txt, sequence, meta);
         });
       });
     });
@@ -66,6 +76,23 @@ class EPUBToText {
     }, (err, numberOfChapters) => {
       totalCount = numberOfChapters
     });
+  }
+
+  /**
+   * EpubToText#getTitleFromHtml()
+   *
+   * Best efforts to find a title in the HTML tags (title, H1, etc.)
+   **/
+  getTitleFromHtml(html) {
+    const root = htmlParser.parse(html);
+    var title = root.querySelector('h1');
+    if (title == null) {
+      title = root.querySelector('title');
+      if (title == null) {
+        return '';
+      };
+    };
+    return title.structuredText.replace("\n", " ");
   }
 }
 

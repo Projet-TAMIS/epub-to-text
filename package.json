@@ -17,7 +17,8 @@
   ],
   "dependencies": {
     "epub": "christianroy/epub",
-    "html-to-text": "^3.1.0"
+    "html-to-text": "^3.1.0",
+    "node-html-parser": "1.1.15"
   },
   "devDependencies": {
     "mocha": "^2.2.1",
