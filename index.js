@@ -24,25 +24,29 @@ class EPUBToText {
 
     // callback fired for each chapter (or they are written to disk)
     epub.on('end', function() {
-      epub.flow.forEach(function(chapter, sequence) {
-        epub.getChapter(chapter.id, function(err, html) {
-          var txt = '';
-          if (html) {
-            txt = htmlToText.fromString(html.toString(), {ignoreHref: true});
-          };
-          var meta = {};
-          meta.id = chapter.id;
-          meta.excerpt = txt.trim().slice(0, 250);
-          meta.size = txt.length
-          meta.sequence_number = sequence
-          if (chapter.title) {
-            meta.title = chapter.title
-          } else {
-            meta.title = klass.getTitleFromHtml(html);
-          }
-          callback(err, txt, sequence, meta);
+      if (epub.flow.length > 0) {
+        epub.flow.forEach(function(chapter, sequence) {
+          epub.getChapter(chapter.id, function(err, html) {
+            var txt = '';
+            if (html) {
+              txt = htmlToText.fromString(html.toString(), {ignoreHref: true});
+            };
+            var meta = {};
+            meta.id = chapter.id;
+            meta.excerpt = txt.trim().slice(0, 250);
+            meta.size = txt.length
+            meta.sequence_number = sequence
+            if (chapter.title) {
+              meta.title = chapter.title
+            } else {
+              meta.title = klass.getTitleFromHtml(html);
+            }
+            callback(err, txt, sequence, meta);
+          });
         });
-      });
+      } else {
+        callback('EPUB flow empty');
+      }
     });
 
     // callback as soon as file is ready to give info on how many chapters will be processed
